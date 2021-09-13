@@ -8,9 +8,9 @@ const routes: Array<RouteRecordRaw> = [
     component: Home
   },
   {
-    path: '/user-edit',
-    name: 'UserEditForm',
-    component: () => import(/* webpackChunkName: "UserEditForm" */ '../components/UserEditForm.vue')
+    path: '/user-edit/:id',
+    name: 'UserEditView',
+    component: () => import(/* webpackChunkName: "UserEditView" */ '../components/UserEditView.vue')
   },
   {
     path: '/user-add',

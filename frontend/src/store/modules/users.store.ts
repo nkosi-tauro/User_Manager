@@ -39,11 +39,7 @@ const actions = <ActionTree<State, any>>{
   async get({ commit }, id: string): Promise<void> {
     commit('SET_LOADING', true)
     try {
-      const data: User = await (await axios.get('http://127.0.0.1:3000/api/users', {
-        params : {
-          id : id
-        }
-      })).data
+      const data: User = await (await axios.get(`http://127.0.0.1:3000/api/users/${id}`)).data
       commit('SET_USER', data)
     } catch (error) {
       console.log(error)
@@ -77,10 +73,24 @@ const actions = <ActionTree<State, any>>{
       commit('SET_LOADING', false)
     }
   },
+  async patch({ commit }, payload): Promise<void> {
+    commit('SET_LOADING', true)
+    try {
+      const data: User = await axios.patch(`http://127.0.0.1:3000/api/users/${payload.id}`, payload.data)
+      router.push({path : "/"})
+      commit('ADD_USER', data)
+    } catch (error) {
+      console.log(error)
+      commit('SET_ERROR', error.message)
+    } finally {
+      commit('SET_LOADING', false)
+    }
+  },
   async delete({ commit }, id: string): Promise<void> {
     commit('SET_LOADING', true)
     try {
-      const data = await axios.delete('/users')
+      const data = await await (await axios.delete(`http://127.0.0.1:3000/api/users/${id}`)).data
+      router.push({path : "/"})
       commit('SET_PRODUCT', data)
     } catch (error) {
       console.log(error)
