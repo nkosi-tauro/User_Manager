@@ -1,18 +1,33 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <img alt="Vue logo" src="../assets/logo.png" />
+    <div v-if="userLoading">..loading</div>
+    <div v-else>{{users}}</div>
   </div>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import { defineComponent, computed, ComputedRef } from "vue";
+import { useStore } from "vuex";
+import { User } from "../entities";
 
-@Options({
-  components: {
-    HelloWorld,
+export default defineComponent({
+  components: {},
+  setup() {
+    const store = useStore();
+    
+    store.dispatch('users/get')
+    const users: ComputedRef<User> = computed(() => {
+      return store.getters["users/getUser"];
+    });
+    const userLoading: ComputedRef<boolean> = computed(() => {
+      return store.getters["users/getLoading"];
+    });
+
+    return {
+      users,
+      userLoading,
+    };
   },
-})
-export default class Home extends Vue {}
+});
 </script>
