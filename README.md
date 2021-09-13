@@ -37,7 +37,7 @@ A CRUD User management system built with [Vue 3](https://v3.vuejs.org/) and [Gof
 
 The following tools were used in this project:
 
-- [Vue 3](https://v3.vuejs.org/)
+- [Vue 3](https://v3.vuejs.org/) + [Vuex](https://next.vuex.vuejs.org/) 
 - [Gofiber](https://gofiber.io/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [MongoDB](https://github.com/mongodb/mongo-go-driver)
