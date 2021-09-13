@@ -1,9 +1,16 @@
 <template>
   <div class="py-10">
     <header>
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 class="text-3xl font-bold leading-tight text-gray-900">Users</h1>
+   <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mb-1" >
+      <div class="sm:flex sm:items-start sm:justify-between">
+        <div>
+          <h1 class="text-2xl font-semibold text-gray-900">Users</h1>
+        </div>
+        <div class="mt-5 sm:mt-0 sm:ml-6 sm:flex-shrink-0 sm:flex sm:items-center">
+          <router-link type="button" to="/user-add" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm" >Add User</router-link>
+        </div>
       </div>
+    </div>
     </header>
     <main>
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
