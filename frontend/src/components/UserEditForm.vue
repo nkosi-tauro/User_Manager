@@ -1,7 +1,6 @@
 <template>
   <div class="py-2">
-    <div v-if="loading"></div>
-    <main v-else>
+    <main>
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="px-4 py-3 sm:px-0">
         <section class="text-gray-600 body-font relative">
@@ -16,31 +15,31 @@
                 <div class="p-2 w-1/2">
                   <div class="relative">
                     <label for="name" class="leading-7 text-sm text-gray-600">Name</label>
-                    <input type="text" id="name" name="name" v-model="name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    <input type="text" id="name" name="name" v-model="userData.name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                   </div>
                 </div>
                 <div class="p-2 w-1/2">
                   <div class="relative">
                     <label for="email" class="leading-7 text-sm text-gray-600">Email</label>
-                    <input type="email" id="email" name="email" v-model="email" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    <input type="email" id="email" name="email" v-model="userData.email" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                   </div>
                 </div>
                 <div class="p-2 w-1/2">
                   <div class="relative">
                     <label for="password" class="leading-7 text-sm text-gray-600">Password</label>
-                    <input type="password" id="password" name="password" v-model="password" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    <input type="password" id="password" name="password" v-model="userData.password" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                   </div>
                 </div>
                 <div class="p-2 w-1/2">
                   <div class="relative">
                     <label for="Title" class="leading-7 text-sm text-gray-600">Title</label>
-                    <input type="text" id="Title" name="Title" v-model="title" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    <input type="text" id="Title" name="Title" v-model="userData.title" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                   </div>
                 </div>
                 <div class="p-2 w-full">
                   <div class="relative">
                     <label for="Birthdate" class="leading-7 text-sm text-gray-600">Birthdate</label>
-                    <input type="text" id="Birthdate" name="Birthdate" v-model="birthdate" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    <input type="text" id="Birthdate" name="Birthdate" v-model="userData.birthdate" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                   </div>
                 </div>
 
@@ -56,14 +55,12 @@
         </section>
         </div>
       </div>
-      {{user}}
-      {{userData}}
     </main>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ComputedRef, reactive, toRefs } from "vue";
+import { defineComponent, computed, ComputedRef, reactive, toRefs, PropType , onMounted} from "vue";
 import { useStore } from "vuex";
 import {useRoute} from 'vue-router'
 import { User } from "../entities";
@@ -71,38 +68,43 @@ import { User } from "../entities";
 
 export default defineComponent({
   components: {},
-  setup() {
+  props: {
+    id: {
+      type: String,
+    },
+    user : {
+      required: true,
+      type: Object as PropType<User>,
+    },
+  },
+  setup(props) {
 
     const store = useStore()
     const route = useRoute()
 
-    const data = reactive({
-      name : "",
-      email: "",
-      password: "",
-      title: "",
-      birthdate : ""
-    })
+
+
     const update = reactive({
-        userData : {}
+        userData : {} as any
     })
 
 
-    store.dispatch("users/get", route.params.id );
-    const user: ComputedRef<{ data: User }> = computed(() => {
-      return store.getters["users/getUser"];
-    });
-
-    update.userData = user.value
-    const loading: ComputedRef<boolean> = computed(() => {
-      return store.getters["users/getLoading"];
-    });
+    onMounted(() => {
+      localStorage.setItem("updateUser", JSON.stringify(props.user))
+      if (localStorage.getItem("updateUser")) {
+        try {
+          update.userData = JSON.parse(localStorage.getItem("updateUser")!)
+        } catch (e) {
+          localStorage.removeItem("updateUser")
+        }
+      }
+    })
 
     const onSubmit = () => {
-      console.log(data)
+      console.log(update.userData)
       store.dispatch('users/patch', {
         id: route.params.id,
-        values : data
+        data : update.userData
       })
     }
 
@@ -112,10 +114,7 @@ export default defineComponent({
 
     return {
       onSubmit,
-      ...toRefs(data),
       ...toRefs(update),
-      user,
-      loading,
       deleteUser
     };
   },

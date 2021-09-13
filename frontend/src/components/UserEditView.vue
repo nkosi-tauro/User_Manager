@@ -7,10 +7,12 @@
             <div>loading</div>
           </template>
           <template v-else>
-            <div class="bg-white shadow overflow-hidden sm:rounded-md">
+            <div class="">
               <ul role="list" class="divide-y divide-gray-200">
-                <UserEditForm
-                :id="$route.params.id"
+                <UserEditForm 
+                  :id="$route.params.id"
+                  :user="user"
+                  :loading="loading" 
                 />
               </ul>
             </div>
@@ -26,18 +28,30 @@ import { defineComponent, onBeforeMount, watchEffect } from "vue";
 import { computed, ComputedRef } from "vue";
 import { useStore } from "vuex";
 import { User } from "../entities";
-import UserEditForm from './UserEditForm.vue'
-import {useRoute} from 'vue-router'
+import UserEditForm from "./UserEditForm.vue";
+import { useRoute } from "vue-router";
 
 export default defineComponent({
   components: {
-    UserEditForm
-
+    UserEditForm,
   },
   setup() {
+    const store = useStore();
+    const route = useRoute();
 
+    store.dispatch("users/get", route.params.id);
+    const user: ComputedRef<{ data: User }> = computed(() => {
+      localStorage.setItem("updateUser", JSON.stringify(user.value))
+      return store.getters["users/getUser"];
+    });
+
+    const loading: ComputedRef<boolean> = computed(() => {
+      return store.getters["users/getLoading"];
+    });
 
     return {
+      user,
+      loading,
     };
   },
 });

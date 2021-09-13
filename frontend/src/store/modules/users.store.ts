@@ -39,7 +39,7 @@ const actions = <ActionTree<State, any>>{
   async get({ commit }, id: string): Promise<void> {
     commit('SET_LOADING', true)
     try {
-      const data: User = await (await axios.get(`http://127.0.0.1:3000/api/users/${id}`)).data
+      const data: User = await (await axios.get(`http://127.0.0.1:3000/api/users/${id}`)).data.data
       commit('SET_USER', data)
     } catch (error) {
       console.log(error)
@@ -79,6 +79,7 @@ const actions = <ActionTree<State, any>>{
       const data: User = await axios.put(`http://127.0.0.1:3000/api/users/${payload.id}`, payload.data)
       router.push({path : "/"})
       commit('ADD_USER', data)
+      console.log(payload)
     } catch (error) {
       console.log(error)
       commit('SET_ERROR', error.message)
