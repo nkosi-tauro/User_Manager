@@ -3,6 +3,8 @@ import { GetterTree, MutationTree, ActionTree } from 'vuex'
 import axios from "axios"
 import router from '@/router'
 
+const resourceAPI = "http://127.0.0.1:3000/api"
+
 class State {
   loading = false
   error = ''
@@ -39,7 +41,7 @@ const actions = <ActionTree<State, any>>{
   async get({ commit }, id: string): Promise<void> {
     commit('SET_LOADING', true)
     try {
-      const data: User = await (await axios.get(`http://127.0.0.1:3000/api/users/${id}`)).data.data
+      const data: User = await (await axios.get(`${resourceAPI}/users/${id}`)).data.data
       commit('SET_USER', data)
     } catch (error) {
       console.log(error)
@@ -51,7 +53,7 @@ const actions = <ActionTree<State, any>>{
   async fetch({ commit }, options = {}): Promise<void> {
     commit('SET_LOADING', true)
     try {
-      const data: User[] =await (await axios.get('http://127.0.0.1:3000/api/users')).data
+      const data: User[] =await (await axios.get(`${resourceAPI}/users`)).data
       commit('SET_USERS', data)
     } catch (error) {
       console.log(error)
@@ -63,7 +65,7 @@ const actions = <ActionTree<State, any>>{
   async post({ commit }, options = {}): Promise<void> {
     commit('SET_LOADING', true)
     try {
-      const data: User = await axios.post('http://127.0.0.1:3000/api/users', options)
+      const data: User = await axios.post(`${resourceAPI}/users`, options)
       router.push({path : "/"})
       commit('ADD_USER', data)
     } catch (error) {
@@ -76,7 +78,7 @@ const actions = <ActionTree<State, any>>{
   async patch({ commit }, payload): Promise<void> {
     commit('SET_LOADING', true)
     try {
-      const data: User = await axios.put(`http://127.0.0.1:3000/api/users/${payload.id}`, payload.data)
+      const data: User = await axios.put(`${resourceAPI}/users/${payload.id}`, payload.data)
       router.push({path : "/"})
       commit('ADD_USER', data)
       console.log(payload)
@@ -90,7 +92,7 @@ const actions = <ActionTree<State, any>>{
   async delete({ commit }, id: string): Promise<void> {
     commit('SET_LOADING', true)
     try {
-      const data = await await (await axios.delete(`http://127.0.0.1:3000/api/users/${id}`)).data
+      const data = await await (await axios.delete(`${resourceAPI}/users/${id}`)).data
       router.push({path : "/"})
       commit('SET_USER', data)
     } catch (error) {

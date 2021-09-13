@@ -20,11 +20,11 @@ services:
     depends_on: 
       - mongo
 
-  # server:
-  #   container_name: user_management_frontend
-  #   build:
-  #     context: ./frontend
-  #   ports:
-  #     - '8080:8080'
-  #   depends_on: 
-  #     - backend
+  server:
+    container_name: user_management_frontend
+    build:
+      context: ./frontend
+    ports:
+      - '8080:8080'
+    depends_on: 
+      - backend
