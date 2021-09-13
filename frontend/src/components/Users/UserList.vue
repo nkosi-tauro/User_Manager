@@ -24,8 +24,8 @@
                   <time>{{ user.title }}</time>
                 </p>
                 <p class="mt-2 flex items-center text-sm text-gray-500">
-                  <CheckCircleIcon
-                    class="flex-shrink-0 mr-1.5 h-5 w-5 text-green-400"
+                  <CakeIcon
+                    class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-500"
                     aria-hidden="true"
                   />
                   {{ user.birthdate }}
@@ -46,6 +46,7 @@ import {
   CheckCircleIcon,
   ChevronRightIcon,
   MailIcon,
+  CakeIcon
 } from "@heroicons/vue/solid";
 import { User } from "../../entities";
 import { defineComponent, PropType } from "vue";
@@ -55,6 +56,7 @@ export default defineComponent({
     CheckCircleIcon,
     ChevronRightIcon,
     MailIcon,
+    CakeIcon
   },
   props: {
     user: {
