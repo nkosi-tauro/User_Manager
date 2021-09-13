@@ -45,8 +45,8 @@
                 </div>
 
                 <div class="p-2 w-full">
-                  <button type="submit" class="mr-2 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Submit</button>
-                  <button type="submit" class=" text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg ">Delete</button>
+                  <button type="submit" class="mr-2 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Update</button>
+                  <button type="submit" class=" text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg  " @click="deleteUser($route.params.id)">Delete</button>
                   
                 </div>
               </div>
@@ -105,12 +105,18 @@ export default defineComponent({
         values : data
       })
     }
+
+    function deleteUser(id:string) {
+        store.dispatch('users/delete', id)
+    }
+
     return {
       onSubmit,
       ...toRefs(data),
       ...toRefs(update),
       user,
       loading,
+      deleteUser
     };
   },
 });

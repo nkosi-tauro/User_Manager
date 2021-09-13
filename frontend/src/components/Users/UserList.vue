@@ -33,10 +33,9 @@
               </div>
             </div>
           </div>
+          
         </div>
-        <div>
-          <ChevronRightIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
-        </div>
+        <button type="submit" class=" text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-sm ">Edit</button>
       </div>
     </router-link>
   </li>
