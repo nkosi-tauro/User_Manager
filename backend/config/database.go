@@ -31,7 +31,7 @@ func ConnectDB() {
     defer cancel()
 
 	db := client.Database(dbName)
-	
+
     err = client.Connect(ctx)
     if err != nil {
         log.Fatal(err)
@@ -42,7 +42,7 @@ func ConnectDB() {
         log.Fatal(err)
     }
 
-    fmt.Println("Database connected!")
+    fmt.Println("Database connected 😊!")
 
     MI = MongoInstance{
         Client: client,
