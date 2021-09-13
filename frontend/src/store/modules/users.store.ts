@@ -1,7 +1,7 @@
 import { User } from '@/entities'
 import { GetterTree, MutationTree, ActionTree } from 'vuex'
 import axios from "axios"
-
+import router from '@/router'
 
 class State {
   loading = false
@@ -39,7 +39,11 @@ const actions = <ActionTree<State, any>>{
   async get({ commit }, id: string): Promise<void> {
     commit('SET_LOADING', true)
     try {
-      const data: User = await (await axios.get('http://127.0.0.1:3000/api/users')).data
+      const data: User = await (await axios.get('http://127.0.0.1:3000/api/users', {
+        params : {
+          id : id
+        }
+      })).data
       commit('SET_USER', data)
     } catch (error) {
       console.log(error)
@@ -51,7 +55,7 @@ const actions = <ActionTree<State, any>>{
   async fetch({ commit }, options = {}): Promise<void> {
     commit('SET_LOADING', true)
     try {
-      const data: User[] = await axios.get('/users')
+      const data: User[] =await (await axios.get('http://127.0.0.1:3000/api/users')).data
       commit('SET_USERS', data)
     } catch (error) {
       console.log(error)
@@ -63,7 +67,8 @@ const actions = <ActionTree<State, any>>{
   async post({ commit }, options = {}): Promise<void> {
     commit('SET_LOADING', true)
     try {
-      const data: User = await axios.post('/users')
+      const data: User = await axios.post('http://127.0.0.1:3000/api/users', options)
+      router.push({path : "/"})
       commit('ADD_USER', data)
     } catch (error) {
       console.log(error)

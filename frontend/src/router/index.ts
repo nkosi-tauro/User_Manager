@@ -10,7 +10,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/user-edit',
     name: 'UserEditForm',
-    component: () => import(/* webpackChunkName: "UserEditForm" */ '../views/UserEditForm.vue')
+    component: () => import(/* webpackChunkName: "UserEditForm" */ '../components/UserEditForm.vue')
   },
   {
     path: '/user-add',

@@ -52,9 +52,9 @@ export default defineComponent({
   setup() {
     const store = useStore();
 
-    store.dispatch("users/get");
+    store.dispatch("users/fetch");
     const users: ComputedRef<{ data: User[] }> = computed(() => {
-      return store.getters["users/getUser"];
+      return store.getters["users/getUsers"];
     });
     const loading: ComputedRef<boolean> = computed(() => {
       return store.getters["users/getLoading"];

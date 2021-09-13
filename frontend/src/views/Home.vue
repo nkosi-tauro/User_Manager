@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <div v-if="userLoading">..loading</div>
     <Users/>
   </div>
 </template>
