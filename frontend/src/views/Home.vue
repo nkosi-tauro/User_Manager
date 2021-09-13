@@ -1,8 +1,8 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
     <div v-if="userLoading">..loading</div>
     <div v-else>{{users}}</div>
+    <Users/>
   </div>
 </template>
 
@@ -10,9 +10,12 @@
 import { defineComponent, computed, ComputedRef } from "vue";
 import { useStore } from "vuex";
 import { User } from "../entities";
+import Users from "../components/Users/User.vue"
 
 export default defineComponent({
-  components: {},
+  components: {
+    Users
+  },
   setup() {
     const store = useStore();
     
